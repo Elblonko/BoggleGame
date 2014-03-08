@@ -90,6 +90,36 @@ void BogglePlayer::setBoard(unsigned int rows, unsigned int cols, string** diceA
  */
 bool BogglePlayer::getAllValidWords(unsigned int minimum_word_length, set<string>* words){
 
+    //Checks Preconditions
+    
+    if ( ! board.isBuilt() )
+    {
+        cerr << "The player board as not been created yet" << endl;
+        return false;
+    }
+    if ( ! lexicon.isBuilt() )
+    {
+        cerr << "The player lexicon has not been built yet" << endl;
+    }
+    
+
+    //Make a call to BoggleBoards recursive find all valid words for EACH node in the board
+    for (unsigned int row = 0; row < board.getMaxRow(); row++)
+    {
+        for(unsigned int column = 0; column < board.getMaxColumn(); column++)
+        {
+            //create empty string to pass as current word
+            string curr_word;
+            //Make a call to recursive function for each node in the board
+            board.getAllValidWords( board.getNode(row,column), curr_word, lexicon,
+                    minimum_word_length, words);
+
+        }
+    }
+
+    //if everything ran smoothly return true
+    return true;
+
 } //end getAllValidWords
 
 /*

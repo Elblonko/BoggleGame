@@ -35,6 +35,7 @@ class BoggleLexicon {
     //TODO create a better data structure for this field 
     public:
         set<string> lexicon;
+        bool built = false;
 
         //constructor
         BoggleLexicon(){}
@@ -42,11 +43,23 @@ class BoggleLexicon {
         //destructore
         ~BoggleLexicon(){}
         
+/*
+ *****************************************************************************************
+ * Functin Name: markBuilt() 
+ *               isBuilt()
+ *
+ * Descriptions: MarkBuilt() - Marks the lexicon flag as built
+ *               isBuilt() -   Returns true if the lexicon has been built
+ *
+ *****************************************************************************************
+ */   
+void markBuilt();
 
+bool isBuilt();
 /*
  *****************************************************************************************
  * Functin Name:   
- 
+ *
  * PARAMETERS -     
  *
  * PRECONDITION -  
@@ -60,7 +73,7 @@ bool isIn( const string& word_to_check);
 /*
  *****************************************************************************************
  * Functin Name:   
- 
+ *
  * PARAMETERS -     
  *
  * PRECONDITION -  
@@ -121,6 +134,20 @@ class BoggleNode {
     //set string constructor
     BoggleNode(string set_word) : word(set_word){}
 
+ /*
+ *****************************************************************************************
+ * Functin Name:   
+ *
+ * PARAMETERS -     
+ *
+ * PRECONDITION -  
+ * 
+ * POSTCONDITION -  
+ * 
+ *****************************************************************************************
+ */  
+    bool isVisited();
+
     //Destructor
     ~BoggleNode(){};
 
@@ -140,6 +167,7 @@ class BoggleBoard {
     unsigned int minRow = 0;
     unsigned int minColumn = 0;
     unsigned int maxColumn = 0;
+    bool built = false;
 
     /*
  *****************************************************************************************
@@ -163,6 +191,46 @@ class BoggleBoard {
     
     //Constructor
     BoggleBoard(){};
+/*
+ *****************************************************************************************
+ * Functin Name: markBuilt() 
+ *               isBuilt()
+ *
+ * Descriptions: MarkBuilt() - Marks the lexicon flag as built
+ *               isBuilt() -   Returns true if the lexicon has been built
+ *
+ *****************************************************************************************
+ */   
+void markBuilt();
+
+bool isBuilt();
+
+ /*****************************************************************************************
+ * Functin Name:     unsigned int getMinRow();
+ *                   unsigned int getMaxRow();
+ *                   unsigned int getMaxColumn();
+ *                   unsigned int getMinColumn();
+ *
+ * Description:     Getter Methods for the Row and Column Max/Min Fields
+ * 
+ *****************************************************************************************
+ */ 
+    unsigned int getMinRow();
+    unsigned int getMaxRow();
+    unsigned int getMaxColumn();
+    unsigned int getMinColumn();
+
+ /*
+ *****************************************************************************************
+ * Functin Name:    getNode
+ *
+ * PARAMETERS:      Takes in a row and column in that order
+ *
+ * Description:     Returns the node at the row and column specified
+ * 
+ *****************************************************************************************
+ */ 
+    BoggleNode* getNode(unsigned int row, unsigned int column);
  /*
  *****************************************************************************************
  * Functin Name:    setBoard
@@ -181,19 +249,25 @@ class BoggleBoard {
     
 /*
  *****************************************************************************************
- * Functin Name:   
- 
- * PARAMETERS -     
+ * Functin Name:   GetAllValidWords
  *
- * PRECONDITION -  
+ * PARAMETERS -    Takes in a pointer to a BoggleNode* to check all possible words from
+ *                 node, the curr_word built thus far, a lexicon of valid words, the
+ *                 minimium word length accepted and a set of words found so far
+ *
+ * PRECONDITION -  setBoard and BuildLexicon have been called to make the searches
+ *                 possible. all nodes visited fields are set to false
  * 
- * POSTCONDITION -  
+ * POSTCONDITION - All nodes visited fields are set back to false on return, and the
+ *                 set words is filled with all valid words found starting from passed
+ *                 in node
  * 
  *****************************************************************************************
  */ 
-
-    void isOnBoard(BoggleNode* node,string curr_word, BoggleLexicon lexicon,
+    void getAllValidWords(BoggleNode* node,string curr_word, BoggleLexicon lexicon,
             unsigned int minimum_word_length, set<string>* words);
+
+
 
 };
 
