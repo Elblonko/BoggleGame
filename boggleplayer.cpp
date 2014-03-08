@@ -67,6 +67,10 @@ void BogglePlayer::buildLexicon(const vector<string>& word_list){
  *********************************************************************************************************
  */
 void BogglePlayer::setBoard(unsigned int rows, unsigned int cols, string** diceArray){
+
+    //calls function to set the board object up
+    board.setBoard(rows, cols, diceArray);
+
 } //end setBoard
 
 /*
@@ -76,9 +80,8 @@ void BogglePlayer::setBoard(unsigned int rows, unsigned int cols, string** diceA
  * PARAMETERS -    Takes in a minium word length and a pointed to a set of strings to be filled by
  *                 this funciton.
  *
-
-
- * 
+ * PRECONDITION -   setBoard and buildLexicon have been called
+ *
  * POSTCONDITION - Returns a set of strings representing all words in the lexicon, of the minimum 
  *                 length specified and can be found in a simple acyclic path on the board created
  *                 by setboard
@@ -86,6 +89,7 @@ void BogglePlayer::setBoard(unsigned int rows, unsigned int cols, string** diceA
  **********************************************************************************************************
  */
 bool BogglePlayer::getAllValidWords(unsigned int minimum_word_length, set<string>* words){
+
 } //end getAllValidWords
 
 /*
@@ -144,6 +148,7 @@ vector<int> BogglePlayer::isOnBoard(const string& word_to_check){
  **********************************************************************************************************
  */
 void BogglePlayer::getCustomBoard(string** &new_board, unsigned int *rows, unsigned int *cols){
+
 } //end getCustomeBoard
 
 

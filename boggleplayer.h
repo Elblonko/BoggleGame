@@ -34,6 +34,7 @@ class BogglePlayer : public IBogglePlayer {
     //c++ set to store the lexicon build for now
     //set<string> lexicon;
     BoggleLexicon lexicon;
+    BoggleBoard board;
 
 
 
