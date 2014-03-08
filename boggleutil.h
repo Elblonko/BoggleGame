@@ -175,30 +175,88 @@ class BoggleBoard {
         {
             for(unsigned int j = 0; j < columns; j++)
             {
-                //Min Row Case, will have no up pointers
+                //Tests to set the correct up and down pointers (rows)
                 if ( i == minRow )
                 {
+                    // i - 1 is down
+                    board[i][j]->down = board[ i - 1 ][j];
+
+                    //Set the diagnols
+                    // i - 1 down j - 1 left
+                    board[i][j]->ddl = board[ i - 1 ][ j - 1];
+                    // i - 1 down j + 1 right
+                    board[i][j]->ddr = board[ i - 1 ][ j + 1];
 
                 }
                 else if ( i == maxRow )
                 {
+                    // i + 1 is up
+                    board[i][j]->up = board[ i + 1 ][j];
+
+                    //Set the diagnols
+                    // i + 1 up j - 1 left
+                    board[i][j]->dul = board[ i + 1 ][ j - 1];
+                    // i + 1 up j + 1 right
+                    board[i][j]->dur = board[ i + 1 ][ j + 1];
+                }
+                else
+                {
+                    // i + 1 is up
+                    board[i][j]->up = board[ i + 1 ][j];
+                    // i - 1 is down
+                    board[i][j]->down = board[ i - 1 ][j];
+
+                    //Set the diagnols
+                    // i - 1 down j - 1 left
+                    board[i][j]->ddl = board[ i - 1 ][ j - 1];
+                    // i - 1 down j + 1 right
+                    board[i][j]->ddr = board[ i - 1 ][ j + 1];
+                    // i + 1 up j - 1 left
+                    board[i][j]->dul = board[ i + 1 ][ j - 1];
+                    // i + 1 up j + 1 right
+                    board[i][j]->dur = board[ i + 1 ][ j + 1];
+                }
+
+                //Tests to set the correct left and right pointers (columns)
+                if ( j == minColumn )
+                {
+                    //j + 1 is right
+                    board[i][j]->right = board[i][ j + 1 ];
+
+                    //Set the diagnols
+                    //If min Columon no left diagnols
+                    board[i][j]->ddl = NULL;
+                    board[i][j]->dul = NULL;
+                    //other diagnols already set
+
+                }
+                else if ( j == maxColumn )
+                {
+                    //j -1 is left
+                    board[i][j]->left = board[i][ j -1];
+
+                    //Set the diagnols
+                    //If min Columon no right diagnols
+                    board[i][j]->ddr = NULL;
+                    board[i][j]->dur = NULL;
 
                 }
                 else
                 {
-                    // i -1 is up
-                    board[i][j]->up = board[ i -1 ][j];
+                    //j + 1 is right
+                    board[i][j]->right = board[i][ j + 1 ];
+                    //j -1 is left
+                    board[i][j]->left = board[i][ j -1];
+
                 }
+
 
             }
         }
 
 
-    }
+    }//end of constructor
 
-
-
-    
 
 
 
