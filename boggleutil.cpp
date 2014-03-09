@@ -74,7 +74,7 @@ bool BoggleLexicon::isIn( const string& word_to_check){
  *****************************************************************************************
  */   
 void BoggleLexicon::insert( string word_to_insert ){
-    this->lexicon.insert(word_to_insert); 
+    lexicon.insert(word_to_insert); 
 
 } //end insert
 
@@ -181,8 +181,9 @@ bool BoggleBoard::isBuilt(){
  */  
 void BoggleBoard::setBoard( unsigned int rows, unsigned int columns, string** diceArray){
 
-    //Set values for max
-
+    //set the max rows columns
+    maxRow = rows;
+    maxColumn = columns;
 
     //resize board to fit the rows
     board.resize(rows);
@@ -212,6 +213,8 @@ void BoggleBoard::setBoard( unsigned int rows, unsigned int columns, string** di
     //call to helper function set points to set the boggleboards pointers
     setPointers(rows, columns);
 
+    cerr << "just so i can check" << endl;
+
 
 }//end of constructor
 
@@ -239,69 +242,77 @@ void BoggleBoard::setPointers (unsigned int rows, unsigned int columns){
         for(unsigned int j = 0; j < columns; j++)
         {
             //Tests to set the correct up and down pointers (rows)
-            if ( i == minRow )
+            if ( i == 0 )
             {
-                // i - 1 is down
-                board[i][j]->down = board[ i - 1 ][j];
+                // i + 1 is down
+                board[i][j]->down = board[ i + 1 ][j];
 
                 //Set the diagnols
-                // i - 1 down j - 1 left
-                board[i][j]->ddl = board[ i - 1 ][ j - 1];
+                // i + 1 down j - 1 left
+                if (j != 0 )
+                {
+                board[i][j]->ddl = board[ i + 1 ][ j - 1];
+                }
                 // i - 1 down j + 1 right
-                board[i][j]->ddr = board[ i - 1 ][ j + 1];
+                if (j != (columns - 1) )
+                {
+                board[i][j]->ddr = board[ i + 1 ][ j + 1];
+                }
 
             }
-            else if ( i == maxRow )
+            else if ( i == (rows - 1) )
             {
-                // i + 1 is up
-                board[i][j]->up = board[ i + 1 ][j];
+                // i - 1 is up
+                board[i][j]->up = board[ i - 1 ][j];
 
                 //Set the diagnols
-                // i + 1 up j - 1 left
-                board[i][j]->dul = board[ i + 1 ][ j - 1];
-                // i + 1 up j + 1 right
-                board[i][j]->dur = board[ i + 1 ][ j + 1];
+                // i - 1 up j - 1 left
+                if ( j != 0  )
+                {
+                board[i][j]->dul = board[ i - 1 ][ j - 1];
+                }
+                // i - 1 up j + 1 right
+                if( j!= (columns - 1) )
+                {
+                board[i][j]->dur = board[ i - 1 ][ j + 1];
+                }
             }
             else
             {
                 // i + 1 is up
-                board[i][j]->up = board[ i + 1 ][j];
+                board[i][j]->up = board[ i - 1 ][j];
                 // i - 1 is down
-                board[i][j]->down = board[ i - 1 ][j];
+                board[i][j]->down = board[ i + 1 ][j];
 
                 //Set the diagnols
                 // i - 1 down j - 1 left
+                if( j != minColumn )
+                {
                 board[i][j]->ddl = board[ i - 1 ][ j - 1];
-                // i - 1 down j + 1 right
-                board[i][j]->ddr = board[ i - 1 ][ j + 1];
                 // i + 1 up j - 1 left
                 board[i][j]->dul = board[ i + 1 ][ j - 1];
+                }
+                if( j != (maxColumn -1) )
+                {
+                // i - 1 down j + 1 right
+                board[i][j]->ddr = board[ i - 1 ][ j + 1];
                 // i + 1 up j + 1 right
                 board[i][j]->dur = board[ i + 1 ][ j + 1];
+                }
             }
+            
 
             //Tests to set the correct left and right pointers (columns)
-            if ( j == minColumn )
+            if ( j == 0 )
             {
                 //j + 1 is right
                 board[i][j]->right = board[i][ j + 1 ];
 
-                //Set the diagnols
-                //If min Columon no left diagnols
-                board[i][j]->ddl = NULL;
-                board[i][j]->dul = NULL;
-                //other diagnols already set
-
             }
-            else if ( j == maxColumn )
+            else if ( j == (columns - 1) )
             {
                 //j -1 is left
                 board[i][j]->left = board[i][ j -1];
-
-                //Set the diagnols
-                //If min Columon no right diagnols
-                board[i][j]->ddr = NULL;
-                board[i][j]->dur = NULL;
 
             }
             else
@@ -395,3 +406,4 @@ void BoggleBoard::getAllValidWords(BoggleNode* node,string curr_word, BoggleLexi
     //after all recursive calls return the visited node back to false
     node->visited = false;
 }
+
