@@ -11,6 +11,7 @@
 #define BOGGLEUTIL_H
 
 #include <vector>
+#include <stack>
 #include <string>
 #include <algorithm>
 #include <set>
@@ -124,6 +125,10 @@ class BoggleNode {
     //holds the string of the node
     string word;
 
+    //unsigned integers to hold the row and column location of the node
+    unsigned int row;
+    unsigned int column;
+
     //Flag to mark if the node has been visited
     bool visited = false;
 
@@ -147,6 +152,21 @@ class BoggleNode {
  *****************************************************************************************
  */  
     bool isVisited();
+
+ /*
+ *****************************************************************************************
+ * Functin Name:   
+ *
+ * PARAMETERS -     
+ *
+ * PRECONDITION -  
+ * 
+ * POSTCONDITION -  
+ * 
+ *****************************************************************************************
+ */  
+    unsigned int getColumn();
+    unsigned int getRow();
 
     //Destructor
     ~BoggleNode(){};
@@ -267,6 +287,19 @@ bool isBuilt();
     void getAllValidWords(BoggleNode* node,string curr_word, BoggleLexicon lexicon,
             unsigned int minimum_word_length, set<string>* words);
 
+/*
+ *****************************************************************************************
+ * Functin Name:     isOnBoard
+ *
+ * PARAMETERS -     takes a node to start from and a string to search for  
+ *
+ * PRECONDITION -   Setboard has been called
+ * 
+ * POSTCONDITION -  board is unchanged after call
+ * 
+ *****************************************************************************************
+ */  
+    void isOnBoard(BoggleNode* node, string curr_word, string const &search_word, bool &isFound, stack<int> &path); 
 
 
 };

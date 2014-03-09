@@ -40,12 +40,13 @@ void BogglePlayer::buildLexicon(const vector<string>& word_list){
 
     for(unsigned int i = 0; i < word_list.size(); i++)
     {
-
-
         //TODO Createa  better implementation then a set for this structure
         string key = word_list[i];
-        this->lexicon.insert(key);
+        lexicon.insert(key);
     }
+
+    //mark lexicon as built
+    lexicon.markBuilt();
 
   } //end of buildLexicon
 
@@ -100,6 +101,7 @@ bool BogglePlayer::getAllValidWords(unsigned int minimum_word_length, set<string
     if ( ! lexicon.isBuilt() )
     {
         cerr << "The player lexicon has not been built yet" << endl;
+        return false;
     }
     
 
@@ -159,6 +161,53 @@ bool BogglePlayer::isInLexicon(const string& word_to_check){
  */
 
 vector<int> BogglePlayer::isOnBoard(const string& word_to_check){
+    //Checks Preconditions
+    //Create a vector to fill with the path
+     vector<int> pathVector;
+
+    if ( ! board.isBuilt() )
+    {
+        cerr << "The player board has not been created yet" << endl;
+        return pathVector;
+    }
+    if ( ! lexicon.isBuilt() )
+    {
+        cerr << "The player lexicon has not been built yet" << endl;
+        return pathVector;
+    }
+
+
+    //create to set when the word is found
+    bool isFound = false;
+    stack<int> path;
+    
+
+    //Make a call to BoggleBoards recursive find all valid words for EACH node in the board
+    for (unsigned int row = 0; row < board.getMaxRow(); row++)
+    {
+        if(isFound){
+            break;
+        }
+        for(unsigned int column = 0; column < board.getMaxColumn(); column++)
+        {
+            //create empty string to pass as current word
+            string curr_word;
+            //Make a call to recursive function for each node in the board
+           board.isOnBoard(board.getNode(row,column), curr_word, word_to_check , isFound, path);
+
+        }
+    }
+
+    //Now take the stack and place the items in a vector
+    while ( ! path.empty() )
+    {
+        pathVector.push_back( path.top() );
+        path.pop();
+    }
+    return pathVector;
+
+
+
 } //end isOnBoard
 
 /*
@@ -178,6 +227,11 @@ vector<int> BogglePlayer::isOnBoard(const string& word_to_check){
  **********************************************************************************************************
  */
 void BogglePlayer::getCustomBoard(string** &new_board, unsigned int *rows, unsigned int *cols){
+
+ unsigned int nonPointercol = *cols;
+ unsigned int nonPointerrow = *rows;
+
+ board.setBoard(nonPointerrow, nonPointercol, new_board);
 
 } //end getCustomeBoard
 

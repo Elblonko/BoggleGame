@@ -99,6 +99,24 @@ bool BoggleNode::isVisited(){
     }
 }
 
+ /*
+ *****************************************************************************************
+ * Functin Name:   
+ *
+ * PARAMETERS -     
+ *
+ * PRECONDITION -  
+ * 
+ * POSTCONDITION -  
+ * 
+ *****************************************************************************************
+ */  
+    unsigned int BoggleNode::getColumn(){
+        return column;
+    }
+    unsigned int BoggleNode::getRow(){
+        return row;
+    }
 
 /********************End of Boggle Node Functions******************************************/
 
@@ -207,14 +225,17 @@ void BoggleBoard::setBoard( unsigned int rows, unsigned int columns, string** di
             BoggleNode* node = new BoggleNode(curr_string);
             board[i][j] = node;
 
+            //set the nodes row and column field
+            node->row = i;
+            node->column = j;
+
         }
     }
 
     //call to helper function set points to set the boggleboards pointers
     setPointers(rows, columns);
 
-    cerr << "just so i can check" << endl;
-
+   built = true; 
 
 }//end of constructor
 
@@ -348,6 +369,7 @@ void BoggleBoard::setPointers (unsigned int rows, unsigned int columns){
 void BoggleBoard::getAllValidWords(BoggleNode* node,string curr_word, BoggleLexicon lexicon,
         unsigned int minimum_word_length, set<string>* words)
 {
+
     //Base case for recursion if this node as been visited
     if ( node->isVisited() )
     {
@@ -370,40 +392,127 @@ void BoggleBoard::getAllValidWords(BoggleNode* node,string curr_word, BoggleLexi
     }
 
     //Now do up to 8 recursive calls in clockwise order
-    if( ! node->up )
+    if(  node->up )
     {
         getAllValidWords(node->up, curr_word, lexicon, minimum_word_length, words);
     }
-    if( ! node->dur )
+    if(  node->dur )
     {
         getAllValidWords(node->dur, curr_word, lexicon, minimum_word_length, words);
     }
-    if( ! node->right )
+    if(  node->right )
     {
         getAllValidWords(node->right, curr_word, lexicon, minimum_word_length, words);
     }
-    if( ! node->ddr )
+    if(  node->ddr )
     {
         getAllValidWords(node->ddr, curr_word, lexicon, minimum_word_length, words);
     }
-    if( ! node->down )
+    if(  node->down )
     {
         getAllValidWords(node->down, curr_word, lexicon, minimum_word_length, words);
     }
-    if( ! node->ddl )
+    if(  node->ddl )
     {
         getAllValidWords(node->ddl, curr_word, lexicon, minimum_word_length, words);
     }
-    if( ! node->left )
+    if(  node->left )
     {
         getAllValidWords(node->left, curr_word, lexicon, minimum_word_length, words);
     }
-    if( ! node->dul )
+    if(  node->dul )
     {
         getAllValidWords(node->dul, curr_word, lexicon, minimum_word_length, words);
     }
 
     //after all recursive calls return the visited node back to false
     node->visited = false;
+}
+/*
+ *****************************************************************************************
+ * Functin Name:     isOnBoard
+ *
+ * PARAMETERS -     takes a node to start from and a string to search for  
+ *
+ * PRECONDITION -   Setboard has been called
+ * 
+ * POSTCONDITION -  board is unchanged after call
+ * 
+ *****************************************************************************************
+ */  
+    void BoggleBoard::isOnBoard(BoggleNode* node,string curr_word, const string &search_word, bool &isFound, stack<int> &path)
+{
+
+    //Base case for recursion if this node as been visited
+    if ( node->isVisited() || isFound )
+    {
+        return;
+    }
+
+    //Check the flag to indicate this node has been visited
+    node->visited = true;
+
+    //Append the current word with the current nodes word
+    curr_word += node->word;
+
+    //check to see if the new word is of min length and in the current lexicon
+    if ( curr_word == search_word )
+     {
+         isFound = true; 
+        unsigned int row = node->getRow();
+        unsigned int column = node->getColumn();
+        //push position to stack using formula row*width+column
+        path.push(row*maxColumn + column);
+
+         return;
+    }
+    //Now do up to 8 recursive calls in clockwise order
+    if(  node->up )
+    {
+        isOnBoard(node->up, curr_word,search_word,isFound, path);
+    }
+    if(  node->dur )
+    {
+        isOnBoard(node->dur, curr_word,search_word,isFound, path);
+    }
+    if(  node->right )
+    {
+        isOnBoard(node->right, curr_word, search_word,isFound, path);
+    }
+    if(  node->ddr )
+    {
+        isOnBoard(node->ddr, curr_word, search_word,isFound, path);
+    }
+    if(  node->down )
+    {
+        isOnBoard(node->down, curr_word, search_word,isFound, path);
+    }
+    if(  node->ddl )
+    {
+        isOnBoard(node->ddl, curr_word, search_word,isFound, path);
+    }
+    if(  node->left )
+    {
+        isOnBoard(node->left, curr_word, search_word,isFound, path);
+    }
+    if(  node->dul )
+    {
+        isOnBoard(node->dul, curr_word, search_word,isFound, path);
+    }
+
+    //if statement to check if the word is found and record the path
+    if(isFound)
+    {
+        unsigned int row = node->getRow();
+        unsigned int column = node->getColumn();
+        //push position to stack using formula row*width+column
+        path.push(row*maxColumn + column);
+    }
+    
+
+    //after all recursive calls return the visited node back to false
+    node->visited = false;
+
+
 }
 

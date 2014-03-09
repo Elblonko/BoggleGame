@@ -4,6 +4,7 @@
  */
 
 #include <vector>
+#include <stack>
 #include <string>
 #include <algorithm>
 #include <set>
@@ -46,6 +47,9 @@ int main(int argc, char *argv[])
     lexicon.insert("abys");
     lexicon.insert("amid");
     lexicon.insert("ahoy");
+    lexicon.insert("bell");
+    lexicon.insert("bells");
+    lexicon.insert("tebat");
 
     //Check to see if the isIn functions works
     if(! lexicon.isIn("tell" ) ) {
@@ -91,7 +95,7 @@ int main(int argc, char *argv[])
     diceArray[0][3] = "l";
 
     diceArray[1][0] = "a";
-    diceArray[1][1] = "b";
+    diceArray[1][1] = "B";
     diceArray[1][2] = "y";
     diceArray[1][3] = "s";
 
@@ -108,5 +112,44 @@ int main(int argc, char *argv[])
     board.setBoard(rows, cols, diceArray);
 
     cerr << "Created the board with setBoard" << endl;
+
+
+    //Now test the get all valid words function
+    set<string>* words = new set<string>;
+    string curr_word;
+    board.getAllValidWords(board.getNode(0,0), curr_word, lexicon, 3, words);
+    board.getAllValidWords(board.getNode(1,0), curr_word, lexicon, 3, words);
+    board.getAllValidWords(board.getNode(1,1), curr_word, lexicon, 3, words);
+    //print through the set
+    for(set<string>::iterator it = words->begin(); it != words->end(); it++)
+    {
+        cout << *it << endl;
+    }
+
+    //now to check isOnBoard
+    bool isword;
+    const string looking = "bell";
+    string curr_word2;
+    stack<int> path;
+    
+    board.isOnBoard(board.getNode(1,1), curr_word2,looking, isword, path);
+    
+    if( ! isword )
+    {
+        cout << "bell was not found" << endl;
+    }
+
+    while( ! path.empty() )
+    {
+
+        int print = path.top();
+        path.pop();
+        cout << print <<endl;
+    }
+
+
+    
+
+    //now need to create the vector
 
 }
