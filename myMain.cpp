@@ -10,7 +10,11 @@
 #include <set>
 #include <stdio.h>
 #include <iostream>
+#include <utility>
 #include "boggleutil.h"
+
+#include<fstream>
+#include<iterator>
 
 
 using namespace std;
@@ -25,7 +29,7 @@ static unsigned int DEFAULTCOLS = 4;
 
 int main(int argc, char *argv[])
 {
-    cerr << "start of main\n\n" << endl;
+    cerr << "START OF MAIN:" << endl;
 
     /*
     const char* lexfilename = DEFAULTLEXFILENAME;
@@ -49,22 +53,31 @@ int main(int argc, char *argv[])
     lexicon.insert("ahoy");
     lexicon.insert("bell");
     lexicon.insert("bells");
+    lexicon.insert("amylletaa");
+    lexicon.insert("taaahoydsllebmi");
+    //should not find this
     lexicon.insert("tebat");
 
+    cerr<< "INSERTING INTO LEXICON FINISHED" <<endl;
+
+    pair<bool,bool> retPair;
+
+    retPair = lexicon.isIn("abys");
+    if( ! retPair.first )
+    {
+        cerr << "abys: was not a prefix" <<endl;
+    }
+    if( ! retPair.second )
+    {
+        cerr << "abys: was not a word" <<endl;
+    }
+
+
+
+
     //Check to see if the isIn functions works
-    if(! lexicon.isIn("tell" ) ) {
-        cerr << "String tell not found" <<endl;
-    }
-    if(! lexicon.isIn("abys" ) ) {
-        cerr << "String abys not found" <<endl;
-    }
-    if(! lexicon.isIn("amid" ) ) {
-        cerr << "String amid not found" <<endl;
-    }
-    if(! lexicon.isIn("ahoy" ) ) {
-        cerr << "String ahoy not found" <<endl;
-    }
- 
+    
+
 
 
     BoggleBoard board;
@@ -111,15 +124,40 @@ int main(int argc, char *argv[])
 
     board.setBoard(rows, cols, diceArray);
 
-    cerr << "Created the board with setBoard" << endl;
+    cerr << "CREATED BOARD WITH SETBOARD" << endl;
 
 
     //Now test the get all valid words function
     set<string>* words = new set<string>;
     string curr_word;
-    board.getAllValidWords(board.getNode(0,0), curr_word, lexicon, 3, words);
-    board.getAllValidWords(board.getNode(1,0), curr_word, lexicon, 3, words);
-    board.getAllValidWords(board.getNode(1,1), curr_word, lexicon, 3, words);
+    for (unsigned int row = 0; row < board.getMaxRow(); row++)
+    {
+        for(unsigned int column = 0; column < board.getMaxColumn(); column++)
+        {
+            //create empty string to pass as current word
+            string curr_word;
+            //Make a call to recursive function for each node in the board
+            board.getAllValidWords( board.getNode(row,column), curr_word, lexicon,
+                    3, words);
+
+        }
+    }
+
+    //check to make sure visited was reset correctly
+    for (unsigned int row = 0; row < board.getMaxRow(); row++)
+    {
+        for(unsigned int column = 0; column < board.getMaxColumn(); column++)
+        {
+
+         BoggleNode* temp = board.getNode(row,column);
+         if(temp->isVisited())
+            {
+                cerr << "row: " << row << " column: " << column << " was not reset" <<endl;
+            }
+        }
+    }
+
+    
     //print through the set
     for(set<string>::iterator it = words->begin(); it != words->end(); it++)
     {
@@ -147,9 +185,26 @@ int main(int argc, char *argv[])
         cout << print <<endl;
     }
 
+    ifstream myfile("boglex.txt");
 
-    
+    //read in a file and put it into a vector
+    vector<string> myDict;
+    copy(istream_iterator<string>(myfile),
+        istream_iterator<string>(),
+        back_inserter(myDict) );
 
-    //now need to create the vector
+    //Now try and insert the whole fucker into a lexicon
+    for(unsigned int i = 0; i < myDict.size(); i++)
+    {
+        string key = myDict[i];
+        lexicon.insert(key);
+    }
+
+    //mark lexicon as built
+    lexicon.markBuilt();
+
+
+
+    //now need to create tmhe vector
 
 }

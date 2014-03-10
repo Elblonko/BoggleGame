@@ -15,10 +15,60 @@
 #include <string>
 #include <algorithm>
 #include <set>
+#include <utility>
 #include <stdio.h>
 #include <iostream>
 
 using namespace std;
+
+/*********************** BoggleLexiconNode Class *********************************/
+
+class BoggleLexiconNode {
+
+    //declares friend class
+    friend class BoggleLexicon;
+
+    /****CLASS FIELDS****/
+
+    private:
+    //3 poitners to other nodes
+    BoggleLexiconNode *less = NULL;
+    BoggleLexiconNode *greater = NULL;
+    BoggleLexiconNode *equal = NULL;
+
+    //Flag if this node signifies a word
+    bool isaWord;
+
+    //character the node holds
+    char character;
+
+    public:
+    //default constructor
+    BoggleLexiconNode(){}
+    //constructor
+    BoggleLexiconNode(char insert);
+
+    //destructor
+    ~BoggleLexiconNode(){}
+
+/*
+ *****************************************************************************************
+ * Functin Name:    isWord 
+ *
+ * PARAMETERS -     
+ *
+ * PRECONDITION -  
+ * 
+ * POSTCONDITION -  
+ * 
+ *****************************************************************************************
+ */
+    bool isWord();
+
+
+};
+
+/*********************** End of BoggleLexiconNode Class ***********************/
 
 /*********************** BoggleLexicon Class *********************************/
 
@@ -34,10 +84,18 @@ using namespace std;
  */
 class BoggleLexicon {
     //TODO create a better data structure for this field 
-    public:
-        set<string> lexicon;
+    private:
+        
+        //root of the ternary trie
+        BoggleLexiconNode *root = NULL;
+        
+        //Flag to signify Lexicon has been built
         bool built = false;
 
+        BoggleLexiconNode* insertWholeWord(BoggleLexiconNode *&tempNode, string &word_to_insert);
+
+
+    public:
         //constructor
         BoggleLexicon(){}
 
@@ -69,7 +127,7 @@ bool isBuilt();
  * 
  *****************************************************************************************
  */   
-bool isIn( const string& word_to_check);
+pair<bool,bool> isIn( const string& word_to_check);
 
 /*
  *****************************************************************************************
