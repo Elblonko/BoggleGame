@@ -12,6 +12,7 @@
 #include <iostream>
 #include <utility>
 #include "boggleutil.h"
+#include "boggleplayer.h"
 
 #include<fstream>
 #include<iterator>
@@ -202,6 +203,131 @@ int main(int argc, char *argv[])
 
     //mark lexicon as built
     lexicon.markBuilt();
+    
+  
+    //Now test the get all valid words function
+    //set<string>* words = new set<string>;
+    //string curr_word;
+    for (unsigned int row = 0; row < board.getMaxRow(); row++)
+    {
+        for(unsigned int column = 0; column < board.getMaxColumn(); column++)
+        {
+            //create empty string to pass as current word
+            string curr_word;
+            //Make a call to recursive function for each node in the board
+            board.getAllValidWords( board.getNode(row,column), curr_word, lexicon,
+                    3, words);
+
+        }
+    }
+
+
+    //check to make sure visited was reset correctly
+    for (unsigned int row = 0; row < board.getMaxRow(); row++)
+    {
+        for(unsigned int column = 0; column < board.getMaxColumn(); column++)
+        {
+
+         BoggleNode* temp = board.getNode(row,column);
+         if(temp->isVisited())
+            {
+                cerr << "row: " << row << " column: " << column << " was not reset" <<endl;
+            }
+        }
+    }
+
+    /*
+    //print through the set
+    for(set<string>::iterator it = words->begin(); it != words->end(); it++)
+    {
+        cout << *it << endl;
+    }
+    */
+
+    cout << "The number of words found is: " << words->size() << endl;
+
+
+    //NOW test the file from moodle
+    //read in a file and put it into a vector
+    ifstream myfile2("lex.txt");
+
+    vector<string> myDict2;
+
+    copy(istream_iterator<string>(myfile2),
+        istream_iterator<string>(),
+        back_inserter(myDict2) );
+
+    //Create new lexicon object
+    BogglePlayer player;
+
+    player.buildLexicon(myDict2);
+
+    ifstream myfile3("brd.txt");
+
+    vector<string> newBoard;
+
+    //get the new board demensions
+    /*
+    copy(istream_iterator<string>(myfile3),
+        istream_iterator<string>(),
+        back_inserter(newBoard) );
+    */
+
+    string temp;
+    while(getline(myfile3,temp))
+   {
+        newBoard.push_back(temp);
+    }
+    
+    unsigned int crows = 20;
+    unsigned int ccolumns  = 23;
+
+    string **customdiceArray = new string*[crows];
+    for(unsigned int i = 0; i<crows;i++){
+        customdiceArray[i] = new string[ccolumns];
+    }
+
+    for(unsigned int i = 0; i < 20; i++)
+    {
+        for(unsigned int j = 0; j < 23; j++)
+        {
+            customdiceArray[i][j] = newBoard[i][j];
+            //cerr << "Filling in board[" << i << "][" << j << "] with: " << newBoard[i][j] <<endl;
+
+            //cerr << "Custome dice equals[" << i << "][" << j << "] with: " << customdiceArray[i][j] <<endl;
+        }
+    }
+
+    player.getCustomBoard(customdiceArray,&crows,&ccolumns); 
+
+    set<string> wordsFound;
+
+    player.getAllValidWords( 2, &wordsFound);
+
+    //check to see if valid words is working
+    cerr << "The size of word set found was: " << wordsFound.size() <<endl;
+
+
+    
+
+
+    
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

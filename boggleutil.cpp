@@ -737,9 +737,6 @@ BoggleLexiconNode* BoggleLexicon::insertWholeWord( BoggleLexiconNode *&tempNode,
             return;
         }
 
-        //Check the flag to indicate this node has been visited
-        node->visited = true;
-
         //Append the current word with the current nodes word
         curr_word += node->word;
 
@@ -754,6 +751,13 @@ BoggleLexiconNode* BoggleLexicon::insertWholeWord( BoggleLexiconNode *&tempNode,
 
             return;
         }
+
+        //Check the flag to indicate this node has been visited
+        node->visited = true;
+
+
+
+
         //Now do up to 8 recursive calls in clockwise order
         if(  node->up )
         {

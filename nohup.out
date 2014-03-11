@@ -1,0 +1,33 @@
+Qt at-spi: error getting the accessibility dbus address:  "The name org.a11y.Bus was not provided by any .service files" 
+Accessibility DBus not found. Falling back to session bus.
+Reading lexicon from boglex.txt...
+178691 distinct words read from boglex.txt.
+BUILDLEXICON STARTED
+BUILDLEXICON COMPLETED
+SETBOARD STARTED
+SETBOARD COMPLETED
+ISINLEXICON STARTED
+ISINLEXICON STARTED
+ISONBOARD STARTED
+ISONBOARD COMPLETED
+ISINLEXICON STARTED
+ISINLEXICON STARTED
+ISINLEXICON STARTED
+ISINLEXICON STARTED
+ISONBOARD STARTED
+ISONBOARD COMPLETED
+ISINLEXICON STARTED
+ISONBOARD STARTED
+ISONBOARD COMPLETED
+GET ALL VALID WORDS STARTED 
+GET ALL VALID WORDS COMPLETED
+GET ALL VALID WORDS STARTED 
+GET ALL VALID WORDS COMPLETED
+Qt at-spi: error getting the accessibility dbus address:  "The name org.a11y.Bus was not provided by any .service files" 
+Accessibility DBus not found. Falling back to session bus.
+Reading lexicon from boglex.txt...
+178691 distinct words read from boglex.txt.
+BUILDLEXICON STARTED
+BUILDLEXICON COMPLETED
+SETBOARD STARTED
+SETBOARD COMPLETED

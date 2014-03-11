@@ -29,7 +29,6 @@ using namespace std;
 void BogglePlayer::buildLexicon(const vector<string>& word_list){
 
     
-    cerr << "BUILDLEXICON STARTED" << endl;
 
     //shuffle the vector passed in for most balanced results
     //TODO get working
@@ -54,7 +53,6 @@ void BogglePlayer::buildLexicon(const vector<string>& word_list){
     //mark lexicon as built
     lexicon.markBuilt();
 
-    cerr << "BUILDLEXICON COMPLETED" << endl;
 
   } //end of buildLexicon
 
@@ -77,12 +75,10 @@ void BogglePlayer::buildLexicon(const vector<string>& word_list){
  */
 void BogglePlayer::setBoard(unsigned int rows, unsigned int cols, string** diceArray){
     
-    cerr << "SETBOARD STARTED" << endl;
 
     //calls function to set the board object up
     board.setBoard(rows, cols, diceArray);
 
-    cerr << "SETBOARD COMPLETED" << endl;
 
 } //end setBoard
 
@@ -103,7 +99,6 @@ void BogglePlayer::setBoard(unsigned int rows, unsigned int cols, string** diceA
  */
 bool BogglePlayer::getAllValidWords(unsigned int minimum_word_length, set<string>* words){
 
-    cerr <<"GET ALL VALID WORDS STARTED " << endl;
 
     //Checks Preconditions
     
@@ -133,7 +128,6 @@ bool BogglePlayer::getAllValidWords(unsigned int minimum_word_length, set<string
         }
     }
 
-    cerr << "GET ALL VALID WORDS COMPLETED" << endl;
 
     //if everything ran smoothly return true
     return true;
@@ -155,7 +149,6 @@ bool BogglePlayer::getAllValidWords(unsigned int minimum_word_length, set<string
  */
 bool BogglePlayer::isInLexicon(const string& word_to_check){
 
-    cerr << "ISINLEXICON STARTED" << endl;
     pair<bool,bool> returnPair;
 
     returnPair = lexicon.isIn( word_to_check );
@@ -190,7 +183,6 @@ bool BogglePlayer::isInLexicon(const string& word_to_check){
 
 vector<int> BogglePlayer::isOnBoard(const string& word_to_check){
 
-    cerr << "ISONBOARD STARTED" << endl;
 
     //Checks Preconditions
     //Create a vector to fill with the path
@@ -236,7 +228,6 @@ vector<int> BogglePlayer::isOnBoard(const string& word_to_check){
         path.pop();
     }
     
-    cerr << "ISONBOARD COMPLETED" << endl;
 
     return pathVector;
 

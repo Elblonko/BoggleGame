@@ -10,4 +10,10 @@ Implementating: Boggle's grpahics are implemented using the Nokia QT graphics li
                 is created by several files. The most important of which are Boggleplayer and Boggleuetil which
                 containt all of the data structure and minipulation needed for the program.
 
-How to Run:
+How to Compile testers:
+ for myMain.cpp type
+ g++ -g -std=c++11  myMain.cpp boggleutil.h boggleutil.cpp
+
+ for bogtest.cpp type
+ g++ -g -std=c++11  bogtest.cpp boggleutil.h boggleutil.cpp boggleplayer.h boggleplayer.cpp
+
