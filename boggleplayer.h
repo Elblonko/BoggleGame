@@ -40,6 +40,14 @@ class BogglePlayer : public IBogglePlayer {
 
     public:
 
+//constructor
+BogglePlayer();
+
+//destructor
+~BogglePlayer();
+
+
+
         /*
          *********************************************************************************************************
          * Functions Name:   void buildLexicon(const vector<string>& word_list);
@@ -138,8 +146,6 @@ class BogglePlayer : public IBogglePlayer {
          **********************************************************************************************************
          */
         void getCustomBoard(string** &new_board, unsigned int *rows, unsigned int *cols);
-
-        ~BogglePlayer() {}
 
 };
 

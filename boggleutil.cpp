@@ -18,16 +18,57 @@
  *****************************************************************************************
  * Functin Name:    Constructor 
  *
- * PARAMETERS -     
- *
- * PRECONDITION -  
- * 
- * POSTCONDITION -  
- * 
  *****************************************************************************************
  */
+
+BoggleLexiconNode::BoggleLexiconNode(){
+    //Set the pointers to null to start
+    less = NULL;
+    greater = NULL;
+    equal = NULL;
+
+    //set flag equal to false
+    isaWord = false;
+
+    //set char to default 0
+    character = 0;
+
+}
+
+
 BoggleLexiconNode::BoggleLexiconNode(char insert) : character(insert){
 
+    //Set the pointers to null to start
+    less = NULL;
+    greater = NULL;
+    equal = NULL;
+
+    //set flag equal to false
+    isaWord = false;
+}
+
+/*
+ *****************************************************************************************
+ * Functin Name:    Destructor
+ *
+ *****************************************************************************************
+ */
+//Destructor
+BoggleLexiconNode::~BoggleLexiconNode(){
+
+    //delete all allocated notes
+    if(less){
+    delete less;
+    less = 0;
+    }
+    if(greater){
+    delete greater;
+    greater = 0;
+    }
+    if(equal){
+    delete equal;
+    equal = 0;
+    }
 }
 
 
@@ -61,6 +102,47 @@ bool BoggleLexiconNode::isWord(){
 
 /*********************BoggleLexicon Class Functions**************************************/
 
+//constructor
+BoggleLexicon::BoggleLexicon(){
+    
+    //Set root to NULL to start
+    root = NULL;
+
+    //Set built equal to false to start
+    built = false;
+
+}
+
+//destructore
+BoggleLexicon::~BoggleLexicon(){
+
+    if(root){
+    //delete the root
+    delete root;
+    }
+    root = 0;
+    
+}
+
+//destructor helper method
+void BoggleLexicon::destruct(BoggleLexiconNode *node){
+    if( ! node ){
+        return;
+    }
+
+    if(node->less){
+        destruct(node->less);
+    }
+    if(node->greater){
+        destruct(node->greater);
+    }
+    if(node->equal){
+        destruct(node->equal);
+    }
+
+    delete node;
+
+}
 /*
  *****************************************************************************************
  * Functin Name: markBuilt() 
@@ -291,6 +373,7 @@ void BoggleLexicon::insert(string word_to_insert ){
         //CASE 3 next character is greater than current node character
         else 
         {
+
             if( ! tempNode->greater )
             {
                 char insertChar = word_to_insert.at(0);
@@ -357,6 +440,41 @@ BoggleLexiconNode* BoggleLexicon::insertWholeWord( BoggleLexiconNode *&tempNode,
 
     /********************Start of BoggleNode Functions****************************************/
 
+BoggleNode::BoggleNode(string set_word) : word(set_word){
+    //set the initial row and col position to 0
+    row = 0;
+    column = 0;
+    
+    //set the visited bool to false
+    visited = false;
+
+    //set all the pointers to null to start
+    up = NULL;
+    down = NULL;
+    left = NULL;
+    right = NULL;
+    dul = NULL;
+    dur = NULL;
+    ddl = NULL;
+    ddr = NULL;
+
+}
+
+//Destructor
+BoggleNode::~BoggleNode(){
+    /*
+    delete up;
+    delete down;
+    delete left;
+    delete right;
+    delete dul;
+    delete dur;
+    delete ddl;
+    delete ddr;
+    */
+    
+}
+
     /*****************************************************************************************
      * Functin Name:    isVisited() 
      *
@@ -391,6 +509,37 @@ BoggleLexiconNode* BoggleLexicon::insertWholeWord( BoggleLexiconNode *&tempNode,
     /********************End of Boggle Node Functions******************************************/
 
     /********************BoggleBoard Class Functions******************************************/
+
+    //constructor
+BoggleBoard::BoggleBoard(){
+    
+    //set the size values
+    minRow = 0;
+    maxRow = 0;
+    minColumn = 0;
+    maxColumn = 0;
+
+    //set built bool to false to start
+    built = false;
+
+}
+
+    //Destructor
+BoggleBoard::~BoggleBoard(){
+    
+    for (unsigned int i = 0; i < maxRow; i++)
+    {
+        for(unsigned int j = 0; j < maxColumn; j++)
+        {
+            delete board[i][j];
+        }
+    }
+    
+    
+}
+
+
+
     /*
      *****************************************************************************************
      * Functin Name: markBuilt() 
@@ -637,7 +786,7 @@ BoggleLexiconNode* BoggleLexicon::insertWholeWord( BoggleLexiconNode *&tempNode,
      * 
      *****************************************************************************************
      */ 
-    void BoggleBoard::getAllValidWords(BoggleNode* node,string curr_word, BoggleLexicon lexicon,
+    void BoggleBoard::getAllValidWords(BoggleNode* node,string curr_word, BoggleLexicon &lexicon,
             unsigned int minimum_word_length, set<string>* words)
     {
 
@@ -739,6 +888,23 @@ BoggleLexiconNode* BoggleLexicon::insertWholeWord( BoggleLexiconNode *&tempNode,
 
         //Append the current word with the current nodes word
         curr_word += node->word;
+
+        //Match Prefixes for early exit
+       /* 
+        string tempSearch = search_word;
+        string tempCompare = curr_word;
+        while( (! tempCompare.empty() ) && ( ! tempSearch.empty() ) )
+        {
+            char searchChar = tempSearch.at(0);
+            tempSearch.erase(0,1);
+            char compareChar = tempCompare.at(0);
+            tempCompare.erase(0,1);
+            if ( ! compareChar == searchChar )
+            {
+                return;
+            }
+        }
+        */
 
         //check to see if the new word is of min length and in the current lexicon
         if ( curr_word == search_word )

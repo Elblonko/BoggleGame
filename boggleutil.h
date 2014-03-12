@@ -32,9 +32,9 @@ class BoggleLexiconNode {
 
     private:
     //3 poitners to other nodes
-    BoggleLexiconNode *less = NULL;
-    BoggleLexiconNode *greater = NULL;
-    BoggleLexiconNode *equal = NULL;
+    BoggleLexiconNode *less;
+    BoggleLexiconNode *greater;
+    BoggleLexiconNode *equal;
 
     //Flag if this node signifies a word
     bool isaWord;
@@ -44,12 +44,12 @@ class BoggleLexiconNode {
 
     public:
     //default constructor
-    BoggleLexiconNode(){}
+    BoggleLexiconNode();
     //constructor
     BoggleLexiconNode(char insert);
 
     //destructor
-    ~BoggleLexiconNode(){}
+    ~BoggleLexiconNode();
 
 /*
  *****************************************************************************************
@@ -87,20 +87,22 @@ class BoggleLexicon {
     private:
         
         //root of the ternary trie
-        BoggleLexiconNode *root = NULL;
+        BoggleLexiconNode *root;
         
         //Flag to signify Lexicon has been built
-        bool built = false;
+        bool built;
 
         BoggleLexiconNode* insertWholeWord(BoggleLexiconNode *&tempNode, string &word_to_insert);
+        //destruct helper
+        void destruct(BoggleLexiconNode * node);
 
 
     public:
         //constructor
-        BoggleLexicon(){}
+        BoggleLexicon();
 
         //destructore
-        ~BoggleLexicon(){}
+        ~BoggleLexicon();
         
 /*
  *****************************************************************************************
@@ -195,7 +197,11 @@ class BoggleNode {
     //default
     BoggleNode() : word(0){}
     //set string constructor
-    BoggleNode(string set_word) : word(set_word){}
+    BoggleNode(string set_word);
+
+        //Destructor
+    ~BoggleNode();
+
 
  /*
  *****************************************************************************************
@@ -226,8 +232,6 @@ class BoggleNode {
     unsigned int getColumn();
     unsigned int getRow();
 
-    //Destructor
-    ~BoggleNode(){};
 
 };
 
@@ -241,11 +245,18 @@ class BoggleBoard {
     vector< vector<BoggleNode*> > board;
 
     //Store the max and min rows and columns for use later
-    unsigned int maxRow = 0;
-    unsigned int minRow = 0;
-    unsigned int minColumn = 0;
-    unsigned int maxColumn = 0;
-    bool built = false;
+    unsigned int maxRow;
+    unsigned int minRow;
+    unsigned int minColumn;
+    unsigned int maxColumn;
+    bool built;
+
+    public:
+    //Constructor
+    BoggleBoard();
+
+    //Destructor
+    ~BoggleBoard();
 
     /*
  *****************************************************************************************
@@ -267,8 +278,7 @@ class BoggleBoard {
 
     public:
     
-    //Constructor
-    BoggleBoard(){};
+
 /*
  *****************************************************************************************
  * Functin Name: markBuilt() 
@@ -342,7 +352,7 @@ bool isBuilt();
  * 
  *****************************************************************************************
  */ 
-    void getAllValidWords(BoggleNode* node,string curr_word, BoggleLexicon lexicon,
+    void getAllValidWords(BoggleNode* node,string curr_word, BoggleLexicon &lexicon,
             unsigned int minimum_word_length, set<string>* words);
 
 /*

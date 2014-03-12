@@ -135,6 +135,7 @@ int main(int argc, char *argv[])
     {
         for(unsigned int column = 0; column < board.getMaxColumn(); column++)
         {
+	  cerr << "finding words starting at row=" << row << ", column=" << column << endl;
             //create empty string to pass as current word
             string curr_word;
             //Make a call to recursive function for each node in the board
@@ -143,6 +144,8 @@ int main(int argc, char *argv[])
 
         }
     }
+
+    cerr << "BOARD HAS BEEN FILLED" << endl;
 
     //check to make sure visited was reset correctly
     for (unsigned int row = 0; row < board.getMaxRow(); row++)
@@ -158,6 +161,8 @@ int main(int argc, char *argv[])
         }
     }
 
+    cerr << "BOARD DOES NOT HAVE ANY ISVISITED FIELDS SET " << endl;
+
     
     //print through the set
     for(set<string>::iterator it = words->begin(); it != words->end(); it++)
@@ -170,6 +175,8 @@ int main(int argc, char *argv[])
     const string looking = "bell";
     string curr_word2;
     stack<int> path;
+
+    cerr << "ABOUT TO CALL ISONBOARD" << endl;
     
     board.isOnBoard(board.getNode(1,1), curr_word2,looking, isword, path);
     
@@ -273,26 +280,39 @@ int main(int argc, char *argv[])
         back_inserter(newBoard) );
     */
 
+    //pull the size of the rows from the file
     string temp;
-    while(getline(myfile3,temp))
-   {
-        newBoard.push_back(temp);
-    }
-    
-    unsigned int crows = 20;
-    unsigned int ccolumns  = 23;
+    unsigned int crows;
+    unsigned int ccolumns;
+    getline(myfile3,temp);
+    cerr << temp << endl;
+    crows = atoi( temp.c_str() );
+    getline(myfile3,temp);
+    ccolumns = atoi( temp.c_str() );
+
+    cerr <<"the value of crows and ccolumns are: " << crows << " and " << ccolumns << endl;
 
     string **customdiceArray = new string*[crows];
     for(unsigned int i = 0; i<crows;i++){
         customdiceArray[i] = new string[ccolumns];
     }
 
-    for(unsigned int i = 0; i < 20; i++)
+       /*
+       temp.erase(remove_if(temp.begin(), temp.end(), ::isspace ), temp.end() );
+
+        newBoard.push_back(temp);
+
+        cerr <<" temp is equal too: " << temp << endl;
+        cerr << (newBoard.back() ) <<endl;
+        */
+    for(unsigned int i = 0; i < crows; i++)
     {
-        for(unsigned int j = 0; j < 23; j++)
+        for(unsigned int j = 0; j <ccolumns; j++)
         {
-            customdiceArray[i][j] = newBoard[i][j];
-            //cerr << "Filling in board[" << i << "][" << j << "] with: " << newBoard[i][j] <<endl;
+            getline(myfile3,temp);
+
+            //cerr << "temp = "<< temp <<endl;
+            customdiceArray[i][j] = temp;
 
             //cerr << "Custome dice equals[" << i << "][" << j << "] with: " << customdiceArray[i][j] <<endl;
         }
@@ -302,32 +322,32 @@ int main(int argc, char *argv[])
 
     set<string> wordsFound;
 
+    cerr << "Getting all valid words: " << endl;
     player.getAllValidWords( 2, &wordsFound);
 
     //check to see if valid words is working
     cerr << "The size of word set found was: " << wordsFound.size() <<endl;
 
 
-    
-
-
-    
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
+    //Deallocate create objects
+    for(unsigned int j = 0; j < rows; j++)
+    {
+        delete[] diceArray[j];
+    }
+    delete[] diceArray;
+    //delete *diceArray;
+    diceArray = 0;
+    //set<string>* words = new set<string>;
+    delete words;
+    words = 0;
+    //string **customdiceArray = new string*[crows];
+    for( unsigned int j = 0; j < crows; j++)
+    {
+        delete[] customdiceArray[j];
+    }
+    delete[] customdiceArray;
+    //delete *customdiceArray;
+    customdiceArray = 0;
 
 
 
