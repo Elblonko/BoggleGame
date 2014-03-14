@@ -895,27 +895,29 @@ void BoggleBoard::isOnBoard(BoggleNode* node,string curr_word, const string &sea
     //Append the current word with the current nodes word
     curr_word += node->word;
 
-
-
-
-    //if to check if the sizes match
-    if ( curr_word.size() == search_word.size() )
+    //Loop to check character by character for match, allow early exit 
+    for (unsigned int i = 0; i < curr_word.size(); i++)
     {
-
-        //check to see if the new word is of min length and in the current lexicon
-        if ( curr_word == search_word )
+        if (curr_word.at(i) == search_word.at(i) )
         {
+            //If words match all the way up to the end, word found
+            if( i == (search_word.size() -1) )
+            {
             isFound = true; 
             unsigned int row = node->getRow();
             unsigned int column = node->getColumn();
             //push position to stack using formula row*width+column
             path.push(row*maxColumn + column);
-
+            return;
+            }
+        }
+        //substring did not match
+        else
+        {
             return;
         }
     }
-    else
-    {
+
 
         //Check the flag to indicate this node has been visited
         node->visited = true;
@@ -956,7 +958,6 @@ void BoggleBoard::isOnBoard(BoggleNode* node,string curr_word, const string &sea
         {
             isOnBoard(node->dul, curr_word, search_word,isFound, path);
         }
-    }
 
     //if statement to check if the word is found and record the path
     if(isFound)

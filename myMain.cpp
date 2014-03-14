@@ -322,19 +322,35 @@ int main(int argc, char *argv[])
 
     set<string> wordsFound;
 
+     cerr << "Calling Find onBoard" << endl;
+
+    string word_Find = "abcabaaaaghdbjfdfhddec";
+
+    vector<int> ret = player.isOnBoard(word_Find);
+
+
+    word_Find = "abcabaaaaghdbjfdfhddec";
+    ret = player.isOnBoard(word_Find);
+
+    word_Find = "aaacafcchddjbchifhfe";
+    ret = player.isOnBoard(word_Find);
+
+    word_Find = "aaaaadgeeeecehbefjf";
+    ret = player.isOnBoard(word_Find);
+
+
+
+    cerr << "Finished call to onBoard " << endl;
+
+
+
     cerr << "Getting all valid words: " << endl;
     player.getAllValidWords( 2, &wordsFound);
 
     //check to see if valid words is working
     cerr << "The size of word set found was: " << wordsFound.size() <<endl;
 
-    cerr << "Calling Find onBoard" << endl;
 
-    string word_Find = "billyjoebob";
-
-    vector<int> ret = player.isOnBoard(word_Find);
-
-    cerr << "Finished call to onBoard " << endl;
 
 
 
