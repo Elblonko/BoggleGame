@@ -22,30 +22,30 @@ using namespace std;
 
 
 /*
-static const char* DEFAULTLEXFILENAME = "boglex.txt";
-static unsigned int DEFAULTMINWORDLENGTH = 4;
-static unsigned int DEFAULTROWS = 4;
-static unsigned int DEFAULTCOLS = 4;
-*/
+   static const char* DEFAULTLEXFILENAME = "boglex.txt";
+   static unsigned int DEFAULTMINWORDLENGTH = 4;
+   static unsigned int DEFAULTROWS = 4;
+   static unsigned int DEFAULTCOLS = 4;
+   */
 
 int main(int argc, char *argv[])
 {
     cerr << "START OF MAIN:" << endl;
 
     /*
-    const char* lexfilename = DEFAULTLEXFILENAME;
-    unsigned int rows = DEFAULTROWS;
-    unsigned int cols = DEFAULTCOLS;
-    unsigned int minwordlength = DEFAULTMINWORDLENGTH;
-    if(argc > 1) lexfilename = argv[1];
-    if(argc > 2) minwordlength = atoi(argv[4]);
-    if(argc > 3) rows = atoi(argv[2]);
-    if(argc > 4) cols = atoi(argv[3]);
-    */
+       const char* lexfilename = DEFAULTLEXFILENAME;
+       unsigned int rows = DEFAULTROWS;
+       unsigned int cols = DEFAULTCOLS;
+       unsigned int minwordlength = DEFAULTMINWORDLENGTH;
+       if(argc > 1) lexfilename = argv[1];
+       if(argc > 2) minwordlength = atoi(argv[4]);
+       if(argc > 3) rows = atoi(argv[2]);
+       if(argc > 4) cols = atoi(argv[3]);
+       */
 
     /**** Testing the Lexicon Class ***/
     BoggleLexicon lexicon;
-    
+
     string wordto = "tell";
 
     lexicon.insert(wordto);
@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
 
 
     //Check to see if the isIn functions works
-    
+
 
 
 
@@ -88,20 +88,20 @@ int main(int argc, char *argv[])
     unsigned int cols = 4;
 
     //string diceArray[rows][cols];
-    
+
     //Create 2 demensional array
     /*
-    diceArray = new string*[rows];
-    for(unsigned int i = 0; i<rows; i++){
-        diceArray[rows] = new string[cols];
-    }
-    */
+       diceArray = new string*[rows];
+       for(unsigned int i = 0; i<rows; i++){
+       diceArray[rows] = new string[cols];
+       }
+       */
 
     string **diceArray = new string*[rows];
     for(unsigned int i = 0; i<rows;i++){
         diceArray[i] = new string[cols];
     }
-    
+
 
     diceArray[0][0] = "t";
     diceArray[0][1] = "e";
@@ -135,7 +135,7 @@ int main(int argc, char *argv[])
     {
         for(unsigned int column = 0; column < board.getMaxColumn(); column++)
         {
-	  cerr << "finding words starting at row=" << row << ", column=" << column << endl;
+            cerr << "finding words starting at row=" << row << ", column=" << column << endl;
             //create empty string to pass as current word
             string curr_word;
             //Make a call to recursive function for each node in the board
@@ -153,8 +153,8 @@ int main(int argc, char *argv[])
         for(unsigned int column = 0; column < board.getMaxColumn(); column++)
         {
 
-         BoggleNode* temp = board.getNode(row,column);
-         if(temp->isVisited())
+            BoggleNode* temp = board.getNode(row,column);
+            if(temp->isVisited())
             {
                 cerr << "row: " << row << " column: " << column << " was not reset" <<endl;
             }
@@ -163,7 +163,7 @@ int main(int argc, char *argv[])
 
     cerr << "BOARD DOES NOT HAVE ANY ISVISITED FIELDS SET " << endl;
 
-    
+
     //print through the set
     for(set<string>::iterator it = words->begin(); it != words->end(); it++)
     {
@@ -171,15 +171,15 @@ int main(int argc, char *argv[])
     }
 
     //now to check isOnBoard
-    bool isword;
+    bool isword = false;
     const string looking = "bell";
     string curr_word2;
     stack<int> path;
 
     cerr << "ABOUT TO CALL ISONBOARD" << endl;
-    
+
     board.isOnBoard(board.getNode(1,1), curr_word2,looking, isword, path);
-    
+
     if( ! isword )
     {
         cout << "bell was not found" << endl;
@@ -198,8 +198,8 @@ int main(int argc, char *argv[])
     //read in a file and put it into a vector
     vector<string> myDict;
     copy(istream_iterator<string>(myfile),
-        istream_iterator<string>(),
-        back_inserter(myDict) );
+            istream_iterator<string>(),
+            back_inserter(myDict) );
 
     //Now try and insert the whole fucker into a lexicon
     for(unsigned int i = 0; i < myDict.size(); i++)
@@ -210,8 +210,8 @@ int main(int argc, char *argv[])
 
     //mark lexicon as built
     lexicon.markBuilt();
-    
-  
+
+
     //Now test the get all valid words function
     //set<string>* words = new set<string>;
     //string curr_word;
@@ -235,8 +235,8 @@ int main(int argc, char *argv[])
         for(unsigned int column = 0; column < board.getMaxColumn(); column++)
         {
 
-         BoggleNode* temp = board.getNode(row,column);
-         if(temp->isVisited())
+            BoggleNode* temp = board.getNode(row,column);
+            if(temp->isVisited())
             {
                 cerr << "row: " << row << " column: " << column << " was not reset" <<endl;
             }
@@ -247,7 +247,7 @@ int main(int argc, char *argv[])
     //print through the set
     for(set<string>::iterator it = words->begin(); it != words->end(); it++)
     {
-        cout << *it << endl;
+    cout << *it << endl;
     }
     */
 
@@ -261,8 +261,8 @@ int main(int argc, char *argv[])
     vector<string> myDict2;
 
     copy(istream_iterator<string>(myfile2),
-        istream_iterator<string>(),
-        back_inserter(myDict2) );
+            istream_iterator<string>(),
+            back_inserter(myDict2) );
 
     //Create new lexicon object
     BogglePlayer player;
@@ -275,10 +275,10 @@ int main(int argc, char *argv[])
 
     //get the new board demensions
     /*
-    copy(istream_iterator<string>(myfile3),
-        istream_iterator<string>(),
-        back_inserter(newBoard) );
-    */
+       copy(istream_iterator<string>(myfile3),
+       istream_iterator<string>(),
+       back_inserter(newBoard) );
+       */
 
     //pull the size of the rows from the file
     string temp;
@@ -297,14 +297,14 @@ int main(int argc, char *argv[])
         customdiceArray[i] = new string[ccolumns];
     }
 
-       /*
+    /*
        temp.erase(remove_if(temp.begin(), temp.end(), ::isspace ), temp.end() );
 
-        newBoard.push_back(temp);
+       newBoard.push_back(temp);
 
-        cerr <<" temp is equal too: " << temp << endl;
-        cerr << (newBoard.back() ) <<endl;
-        */
+       cerr <<" temp is equal too: " << temp << endl;
+       cerr << (newBoard.back() ) <<endl;
+       */
     for(unsigned int i = 0; i < crows; i++)
     {
         for(unsigned int j = 0; j <ccolumns; j++)
@@ -327,6 +327,16 @@ int main(int argc, char *argv[])
 
     //check to see if valid words is working
     cerr << "The size of word set found was: " << wordsFound.size() <<endl;
+
+    cerr << "Calling Find onBoard" << endl;
+
+    string word_Find = "billyjoebob";
+
+    vector<int> ret = player.isOnBoard(word_Find);
+
+    cerr << "Finished call to onBoard " << endl;
+
+
 
 
     //Deallocate create objects
