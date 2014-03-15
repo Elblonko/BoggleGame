@@ -29,22 +29,19 @@ using namespace std;
 
 class BogglePlayer : public IBogglePlayer {
     private:
-    /**** Class Fields ****/
+        /**** Class Fields ****/
 
-    //c++ set to store the lexicon build for now
-    //set<string> lexicon;
-    BoggleLexicon lexicon;
-    BoggleBoard board;
-
-
+        //c++ set to store the lexicon build for now
+        //set<string> lexicon;
+        BoggleLexicon lexicon;
+        BoggleBoard board;
 
     public:
+        //constructor
+        BogglePlayer();
 
-//constructor
-BogglePlayer();
-
-//destructor
-~BogglePlayer();
+        //destructor
+        ~BogglePlayer();
 
 
 

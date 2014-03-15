@@ -48,12 +48,7 @@ BogglePlayer::~BogglePlayer(){
 
 void BogglePlayer::buildLexicon(const vector<string>& word_list){
 
-    
-
-    //shuffle the vector passed in for most balanced results
-    //TODO get working
-    //random_shuffle( word_list.begin(), word_list.end() );
-
+    //Check if the passed list has words
     if( word_list.empty())
     {
         cerr << "buildLexicon:: The passed in string is empty" << endl;
@@ -63,7 +58,6 @@ void BogglePlayer::buildLexicon(const vector<string>& word_list){
 
     //Create the map to be filled and the 
     //set<string> lexicon;
-
     for(unsigned int i = 0; i < word_list.size(); i++)
     {
         string key = word_list[i];
@@ -75,8 +69,6 @@ void BogglePlayer::buildLexicon(const vector<string>& word_list){
 
 
   } //end of buildLexicon
-
-
 
 /*
  *********************************************************************************************************
@@ -203,7 +195,6 @@ bool BogglePlayer::isInLexicon(const string& word_to_check){
 
 vector<int> BogglePlayer::isOnBoard(const string& word_to_check){
 
-
     //Checks Preconditions
     //Create a vector to fill with the path
      vector<int> pathVector;
@@ -248,10 +239,7 @@ vector<int> BogglePlayer::isOnBoard(const string& word_to_check){
         path.pop();
     }
     
-
     return pathVector;
-
-
 
 } //end isOnBoard
 
